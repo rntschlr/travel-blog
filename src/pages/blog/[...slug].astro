@@ -20,7 +20,7 @@ const { Content } = await render(post);
   <article>
     <header class="mb-8">
       <div class="flex items-center gap-2 text-sm text-stone-500 mb-2">
-        <time>{post.data.pubDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</time>
+        <time datetime={post.data.pubDate.toISOString().split('T')[0]}>{post.data.pubDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</time>
         {post.data.location && (
           <>
             <span>•</span>
@@ -51,7 +51,7 @@ const { Content } = await render(post);
           </span>
         ))}
       </div>
-      <a href={withBase('/blog')} class="text-amber-600 hover:text-amber-700">← Back to all posts</a>
+      <a href={withBase('/blog')} class="text-amber-700 hover:text-amber-800">← Back to all posts</a>
     </footer>
   </article>
 </Layout>

@@ -34,7 +34,7 @@
   }
   
   .prose a {
-    @apply text-amber-600 hover:text-amber-700 underline;
+    @apply text-amber-700 hover:text-amber-800 underline;
   }
   
   .prose blockquote {
