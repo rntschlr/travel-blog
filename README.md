@@ -1,124 +1,50 @@
 # Travel Blog
 
-A simple, beautiful travel blog built with Astro and Tailwind CSS for sharing travel updates with friends and family.
+A simple, self-run travel blog for sharing stories and photos with friends and
+family. Live at **https://rntschlr.github.io/travel-blog/**.
 
-## Features
+Built with [Astro](https://astro.build) and Tailwind CSS, edited through
+[Pages CMS](https://pagescms.org), mailing list by
+[Buttondown](https://buttondown.com), hosted free on GitHub Pages.
 
-- 📝 Markdown-based blog posts
-- 📸 Photo gallery support
-- 📡 RSS feed for subscriptions
-- 🎨 Clean, responsive design
-- 🚀 Fast static site generation
-- 🌐 GitHub Pages deployment
+**Just want to post?** Read [HOW-TO-POST.md](HOW-TO-POST.md) — no technical
+knowledge needed.
 
-## Getting Started
+## How it works
 
-### Prerequisites
+- Posts are markdown files in `src/content/posts/`; gallery photos are small
+  YAML files in `src/content/photos/` plus images in `public/images/`.
+- Pages CMS (configured by `.pages.yml`) provides a browser editor that
+  commits straight to this repo — including from a phone.
+- Every push to `main` triggers `.github/workflows/deploy.yml`, which builds
+  the site and publishes it to GitHub Pages. A post is live ~2 minutes after
+  saving.
+- The subscribe form posts to Buttondown; no server, no secrets in the repo.
+  Site name, description, and the Buttondown username live in
+  `src/data/site.json` (editable in Pages CMS under "Site settings").
 
-- Node.js 18+ 
-- npm or yarn
-
-### Installation
+## Development
 
 ```bash
-# Clone the repository
-git clone https://github.com/yourusername/travel-blog.git
-cd travel-blog
-
-# Install dependencies
 npm install
+npm run dev      # dev server at localhost:4321/travel-blog/
+npm run build    # production build to dist/
+npm run preview  # serve the production build locally
 ```
 
-### Development
+Requires Node 22+.
 
-```bash
-# Start development server
-npm run dev
+### Things to know when editing code
 
-# Build for production
-npm run build
-
-# Preview production build
-npm run preview
-```
-
-## Writing Blog Posts
-
-Create new markdown files in `src/content/posts/` with the following frontmatter:
-
-```markdown
----
-title: 'Your Post Title'
-pubDate: 2024-03-15
-description: 'A brief description of your post'
-heroImage: '/images/your-image.jpg'
-location: 'City, Country'
-tags: ['travel', 'adventure']
----
-
-Your post content here...
-```
-
-### Frontmatter Options
-
-| Field | Type | Required | Description |
-|-------|------|----------|-------------|
-| `title` | string | Yes | Post title |
-| `pubDate` | date | Yes | Publication date |
-| `description` | string | Yes | Brief description |
-| `heroImage` | string | No | Hero image path |
-| `location` | string | No | Travel location |
-| `tags` | array | No | Post tags |
-| `updatedDate` | date | No | Last update date |
-
-## Adding Photos
-
-1. Place images in the `public/images/` directory
-2. Reference them in your posts: `![Alt text](/images/photo.jpg)`
-3. For the photo gallery, update `src/pages/gallery.astro`
-
-## Deployment
-
-### GitHub Pages (Recommended)
-
-1. Push to GitHub
-2. Go to repository Settings > Pages
-3. Set source to "GitHub Actions"
-4. The workflow will automatically deploy on push to main
-
-### Other Platforms
-
-The blog generates static files in `dist/` that can be deployed anywhere:
-
-```bash
-npm run build
-# Upload dist/ folder to your hosting provider
-```
-
-## Customization
-
-### Site Settings
-
-Edit `astro.config.mjs` to update:
-- `site`: Your blog URL
-- Integrations: Add/remove features
-
-### Styling
-
-Modify `src/styles/global.css` to customize:
-- Colors
-- Typography
-- Layout
-
-### Components
-
-- `src/layouts/Layout.astro` - Main layout
-- `src/components/` - Reusable components
-
-## RSS Feed
-
-The blog automatically generates an RSS feed at `/rss.xml`. Share this URL with friends and family who want to subscribe.
+- The site is served under the `/travel-blog` base path (see
+  `astro.config.mjs`). Always build internal links with `withBase()` from
+  `src/lib/url.ts` — plain `/blog/...` hrefs break on GitHub Pages.
+- Content schemas live in `src/content.config.ts`. If you add a field there,
+  add it to `.pages.yml` too so it shows up in the editor.
+- When the blog moves to its own domain: remove `base` from
+  `astro.config.mjs`, change the media `output` in `.pages.yml` to `/images`,
+  and search-replace `/travel-blog/images` → `/images` in existing content.
 
 ## License
 
-MIT - Feel free to use this for your own travel blog!
+MIT

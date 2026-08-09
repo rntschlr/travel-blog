@@ -1,0 +1,70 @@
+---
+import site from '../data/site.json';
+import { withBase } from '../lib/url';
+
+interface Props {
+  compact?: boolean;
+  id?: string;
+}
+
+const { compact = false, id = 'subscribe-email' } = Astro.props;
+const username = site.buttondownUsername;
+const action = `https://buttondown.com/api/emails/embed-subscribe/${username}`;
+---
+
+{username ? (
+  compact ? (
+    <form action={action} method="post" class="flex flex-wrap justify-center gap-2">
+      <label for={id} class="sr-only">Email address</label>
+      <input
+        type="email"
+        name="email"
+        id={id}
+        required
+        placeholder="you@example.com"
+        class="px-3 py-2 rounded-lg border border-stone-300 bg-white text-stone-800 w-56"
+      />
+      <button
+        type="submit"
+        class="bg-amber-600 hover:bg-amber-700 text-white px-4 py-2 rounded-lg transition-colors"
+      >
+        Subscribe
+      </button>
+    </form>
+  ) : (
+    <section class="bg-amber-50 border border-amber-200 rounded-lg p-6 text-center">
+      <h2 class="text-2xl font-semibold text-stone-900 mb-2">Follow along by email</h2>
+      <p class="text-stone-600 mb-4">
+        Get an email when there's a new post. No spam, unsubscribe anytime.
+      </p>
+      <form action={action} method="post" class="flex flex-wrap justify-center gap-2">
+        <label for={id} class="sr-only">Email address</label>
+        <input
+          type="email"
+          name="email"
+          id={id}
+          required
+          placeholder="you@example.com"
+          class="px-4 py-2 rounded-lg border border-stone-300 bg-white text-stone-800 w-64"
+        />
+        <button
+          type="submit"
+          class="bg-amber-600 hover:bg-amber-700 text-white px-5 py-2 rounded-lg transition-colors"
+        >
+          Subscribe
+        </button>
+      </form>
+    </section>
+  )
+) : (
+  !compact && (
+    <section class="bg-amber-50 border border-amber-200 rounded-lg p-6 text-center">
+      <h2 class="text-2xl font-semibold text-stone-900 mb-2">Follow along</h2>
+      <p class="text-stone-600">
+        Email signups are coming soon. In the meantime you can subscribe to the
+        <a href={withBase('/rss.xml')} class="text-amber-600 hover:text-amber-700 underline">RSS feed</a>
+        to get notified of new posts.
+      </p>
+    </section>
+  )
+)}

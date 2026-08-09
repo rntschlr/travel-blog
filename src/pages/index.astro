@@ -1,21 +1,28 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import Subscribe from '../components/Subscribe.astro';
 import { getCollection } from 'astro:content';
+import site from '../data/site.json';
+import { withBase } from '../lib/url';
 
 const posts = (await getCollection('posts')).sort(
   (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
 );
 ---
 
-<Layout title="Travel Adventures">
-  <section class="mb-12">
+<Layout title={site.title}>
+  <section class="mb-10">
     <h1 class="text-5xl font-bold mb-4 text-stone-900">Welcome to My Travels</h1>
     <p class="text-xl text-stone-600 leading-relaxed">
-      Hey everyone! This is where I'll be sharing my adventures while traveling the world. 
-      No social media needed - just bookmark this page and check back for updates. 
-      You can also subscribe to the RSS feed to get notified when I post new stories.
+      Hey everyone! This is where I'll be sharing my adventures while traveling the world.
+      No social media needed - just bookmark this page and check back for updates,
+      or subscribe below to get new posts by email.
     </p>
   </section>
+
+  <div class="mb-12">
+    <Subscribe id="subscribe-email-home" />
+  </div>
 
   <section>
     <h2 class="text-3xl font-semibold mb-6 text-stone-800">Latest Posts</h2>
@@ -23,8 +30,8 @@ const posts = (await getCollection('posts')).sort(
       {posts.map((post) => (
         <article class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
           {post.data.heroImage && (
-            <img 
-              src={post.data.heroImage} 
+            <img
+              src={withBase(post.data.heroImage)}
               alt={post.data.title}
               class="w-full h-48 object-cover"
             />
@@ -40,7 +47,7 @@ const posts = (await getCollection('posts')).sort(
               )}
             </div>
             <h3 class="text-2xl font-semibold mb-2">
-              <a href={`/blog/${post.id}`} class="text-stone-900 hover:text-amber-600 transition-colors">
+              <a href={withBase(`/blog/${post.id}`)} class="text-stone-900 hover:text-amber-600 transition-colors">
                 {post.data.title}
               </a>
             </h3>

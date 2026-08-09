@@ -1,0 +1,91 @@
+media:
+  input: public/images
+  output: /travel-blog/images
+
+content:
+  - name: posts
+    label: Blog posts
+    type: collection
+    path: src/content/posts
+    format: yaml-frontmatter
+    filename: '{year}-{month}-{day}-{primary}.md'
+    view:
+      primary: title
+      fields: [title, pubDate, location]
+      sort: pubDate
+      order: desc
+    fields:
+      - name: title
+        label: Title
+        type: string
+        required: true
+      - name: pubDate
+        label: Publish date
+        type: date
+        required: true
+      - name: description
+        label: Short summary (shown on the homepage and in the email)
+        type: string
+        required: true
+      - name: heroImage
+        label: Cover photo (optional)
+        type: image
+      - name: location
+        label: Location (optional, e.g. "Budapest, Hungary")
+        type: string
+      - name: tags
+        label: Tags (optional)
+        type: string
+        list: true
+      - name: body
+        label: Your story
+        type: rich-text
+
+  - name: photos
+    label: Gallery photos
+    type: collection
+    path: src/content/photos
+    format: yaml
+    filename: '{year}-{month}-{day}-{primary}.yml'
+    view:
+      primary: alt
+      fields: [alt, location, date]
+    fields:
+      - name: image
+        label: Photo
+        type: image
+        required: true
+      - name: alt
+        label: What is in the photo? (short description)
+        type: string
+        required: true
+      - name: location
+        label: Where was this taken? (optional)
+        type: string
+      - name: caption
+        label: Caption (optional)
+        type: text
+      - name: date
+        label: Date taken (optional)
+        type: date
+
+  - name: site
+    label: Site settings
+    type: file
+    path: src/data/site.json
+    format: json
+    fields:
+      - name: title
+        label: Blog name
+        type: string
+        required: true
+      - name: description
+        label: Blog description
+        type: string
+        required: true
+      - name: author
+        label: Your name
+        type: string
+      - name: buttondownUsername
+        label: Buttondown username (fills in the email subscribe form)
+        type: string

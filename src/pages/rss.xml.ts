@@ -1,6 +1,8 @@
 import rss from '@astrojs/rss';
 import { getCollection } from 'astro:content';
 import type { APIContext } from 'astro';
+import site from '../data/site.json';
+import { withBase } from '../lib/url';
 
 const posts = await getCollection('posts');
 const sortedPosts = posts.sort(
@@ -9,14 +11,14 @@ const sortedPosts = posts.sort(
 
 export async function GET(context: APIContext) {
   return rss({
-    title: 'Travel Adventures',
-    description: 'A travel blog for friends and family',
-    site: context.site!,
+    title: site.title,
+    description: site.description,
+    site: new URL(withBase('/'), context.site).href,
     items: sortedPosts.map((post) => ({
       title: post.data.title,
       pubDate: post.data.pubDate,
       description: post.data.description,
-      link: `/blog/${post.id}/`,
+      link: withBase(`/blog/${post.id}/`),
     })),
     customData: '<language>en-us</language>',
   });

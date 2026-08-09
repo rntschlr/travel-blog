@@ -6,7 +6,8 @@ import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://yourusername.github.io',
+  site: 'https://rntschlr.github.io',
+  base: '/travel-blog',
   integrations: [mdx(), sitemap()],
   vite: {
     plugins: [tailwindcss()]

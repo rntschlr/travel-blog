@@ -1,6 +1,8 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import { getCollection, render } from 'astro:content';
+import site from '../../data/site.json';
+import { withBase } from '../../lib/url';
 
 export async function getStaticPaths() {
   const posts = await getCollection('posts');
@@ -14,7 +16,7 @@ const { post } = Astro.props;
 const { Content } = await render(post);
 ---
 
-<Layout title={`${post.data.title} | Travel Adventures`} description={post.data.description}>
+<Layout title={`${post.data.title} | ${site.title}`} description={post.data.description}>
   <article>
     <header class="mb-8">
       <div class="flex items-center gap-2 text-sm text-stone-500 mb-2">
@@ -29,8 +31,8 @@ const { Content } = await render(post);
       <h1 class="text-4xl font-bold text-stone-900 mb-4">{post.data.title}</h1>
       
       {post.data.heroImage && (
-        <img 
-          src={post.data.heroImage} 
+        <img
+          src={withBase(post.data.heroImage)}
           alt={post.data.title}
           class="w-full h-64 md:h-96 object-cover rounded-lg shadow-lg"
         />
@@ -49,7 +51,7 @@ const { Content } = await render(post);
           </span>
         ))}
       </div>
-      <a href="/blog" class="text-amber-600 hover:text-amber-700">← Back to all posts</a>
+      <a href={withBase('/blog')} class="text-amber-600 hover:text-amber-700">← Back to all posts</a>
     </footer>
   </article>
 </Layout>

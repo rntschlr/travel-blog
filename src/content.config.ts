@@ -14,4 +14,15 @@ const posts = defineCollection({
   }),
 });
 
-export const collections = { posts };
+const photos = defineCollection({
+  loader: glob({ pattern: "**/*.{yml,yaml}", base: "./src/content/photos" }),
+  schema: z.object({
+    image: z.string(),
+    alt: z.string(),
+    location: z.string().optional(),
+    caption: z.string().optional(),
+    date: z.coerce.date().optional(),
+  }),
+});
+
+export const collections = { posts, photos };
