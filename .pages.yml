@@ -12,8 +12,10 @@ content:
     view:
       primary: title
       fields: [title, pubDate, location]
-      sort: pubDate
-      order: desc
+      sort: [pubDate]
+      default:
+        sort: pubDate
+        order: desc
     fields:
       - name: title
         label: Title

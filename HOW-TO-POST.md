@@ -68,7 +68,9 @@ Skip it until sending manually annoys you.
 2. **Photo** — upload the picture.
 3. **What is in the photo?** — a few words ("Sunset over the Danube").
    This is what screen readers and search engines see.
-4. **Where was this taken?** / **Caption** / **Date** — optional niceties.
+4. **Where was this taken?** / **Caption** / **Date taken** — all optional.
+   **Date taken** decides the gallery order (newest first); if you leave it
+   empty, the day you uploaded the photo is used instead.
 5. **Save.** Same deal: live in 2–3 minutes, newest photos first.
 
 **Tip:** phone photos can be huge. If the gallery starts feeling slow,
@@ -94,9 +96,11 @@ Pages CMS → **Site settings** → edit **Blog name** or **Blog description**
 
 ## If something looks wrong
 
-- **My post isn't showing up.** Give it 3 minutes, then hard-refresh
-  (Cmd+Shift+R). Still missing? Check that **Publish date** isn't set to a
-  future date.
+- **My post isn't showing up.** Give it 3 minutes, then refresh the page —
+  on a computer press Cmd+Shift+R (Mac) or Ctrl+Shift+R (Windows); on a
+  phone, close the tab and open the blog fresh. Still missing after 5
+  minutes? The automatic rebuild may have hiccuped — open the post in Pages
+  CMS, change nothing, and press **Save** again to trigger a fresh build.
 - **A photo looks broken.** Open the entry in Pages CMS and re-upload the
   photo — the most common cause is a canceled upload.
 - **The subscribe box says "coming soon".** The **Buttondown username** in

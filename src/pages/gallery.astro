@@ -4,11 +4,17 @@ import { getCollection } from 'astro:content';
 import site from '../data/site.json';
 import { withBase } from '../lib/url';
 
-const photos = (await getCollection('photos')).sort((a, b) => {
-  const da = a.data.date?.valueOf() ?? 0;
-  const db = b.data.date?.valueOf() ?? 0;
-  return db - da;
-});
+// Sort newest first. Entries saved without an explicit date fall back to the
+// upload date encoded in the CMS filename ({year}-{month}-{day}-...).
+function photoDate(photo: { id: string; data: { date?: Date } }): number {
+  if (photo.data.date) return photo.data.date.valueOf();
+  const m = photo.id.match(/^(\d{4})-(\d{2})-(\d{2})/);
+  return m ? Date.UTC(+m[1], +m[2] - 1, +m[3]) : 0;
+}
+
+const photos = (await getCollection('photos')).sort(
+  (a, b) => photoDate(b) - photoDate(a)
+);
 ---
 
 <Layout title={`Photo Gallery | ${site.title}`}>

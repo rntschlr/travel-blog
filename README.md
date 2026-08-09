@@ -17,8 +17,8 @@ knowledge needed.
 - Pages CMS (configured by `.pages.yml`) provides a browser editor that
   commits straight to this repo — including from a phone.
 - Every push to `main` triggers `.github/workflows/deploy.yml`, which builds
-  the site and publishes it to GitHub Pages. A post is live ~2 minutes after
-  saving.
+  the site and publishes it to GitHub Pages. A post is live ~2–3 minutes
+  after saving.
 - The subscribe form posts to Buttondown; no server, no secrets in the repo.
   Site name, description, and the Buttondown username live in
   `src/data/site.json` (editable in Pages CMS under "Site settings").
